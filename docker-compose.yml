@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  api:
-    build: .
+  henkan:
+    build: ./henkan
     ports:
       - "5000:5000"
     volumes:
-      - ".:/api"
-    working_dir: /api
-    command: python3 api.py
+      - "./henkan:/henkan"
+    working_dir: /henkan
+    command: python3 serv.py
