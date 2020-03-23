@@ -26,7 +26,7 @@ class Word(Base):
     __tablename__ = 'words'
 
     _id = Column('id', Integer, primary_key = True)
-    text = Column('text', Text)
+    kaki = Column('kaki', Text)
     yomi = Column('yomi', Text)
 
 
@@ -49,7 +49,7 @@ if __name__=='__main__':
 
     word = Word()
     word.yomi = 'ばにしぇだよ'
-    word.text = 'ばにしぇだよ〜〜〜www'
+    word.kaki = 'ばにしぇだよ〜〜〜www'
 
     session.add(tweet)
     session.add(word)
