@@ -9,3 +9,11 @@ services:
       - "./henkan:/henkan"
     working_dir: /henkan
     command: python3 serv.py
+  update:
+    build: ./update
+    ports:
+      - "5001:5001"
+    volumes:
+      - "./update:/update"
+    working_dir: /update
+    command: python3 serv.py
