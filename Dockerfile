@@ -9,5 +9,5 @@ WORKDIR /script
 RUN wget https://raw.githubusercontent.com/fumiyas/home-commands/master/echo-sd
 RUN chmod +x echo-sd
 
-#RUN go get -u github.com/greymd/ojichat
+RUN go get -u github.com/greymd/ojichat
 
