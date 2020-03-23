@@ -30,6 +30,15 @@ class Word(Base):
     yomi = Column('yomi', Text)
 
 
+def find_or_add_tweet(session, tweet):
+    users = session.query(Tweet).\
+        filter(Tweet.twitterId==tweet.twitterId).\
+        all()
+
+    if not users:
+        session.add(tweet)
+
+
 Base.metadata.create_all(ENGINE)
 
 
