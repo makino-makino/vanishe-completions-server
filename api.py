@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 
 import hashlib, subprocess
 import urllib.parse
@@ -6,8 +7,12 @@ import urllib.parse
 TIMEOUT = 10
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 @app.route("/echo-sd", methods=['GET'])
+@cross_origin()
 def echo_sd():
     msg = request.args.get('msg')
 
@@ -23,6 +28,7 @@ def echo_sd():
     return jsonify({"result": result})
 
 @app.route("/ojichat", methods=['GET'])
+@cross_origin()
 def ojichat():
     msg = request.args.get('msg')
 
