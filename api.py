@@ -22,6 +22,21 @@ def echo_sd():
 
     return jsonify({"result": result})
 
+@app.route("/ojichat", methods=['GET'])
+def ojichat():
+    msg = request.args.get('msg')
+
+    process = subprocess.run(
+        ['/root/go/bin/ojichat', msg],
+        capture_output=True,
+        encoding='utf-8',
+        timeout=TIMEOUT)
+
+    result = process.stdout
+    result = urllib.parse.quote(result)
+
+    return jsonify({"result": result})
+
 
 
 if __name__ == "__main__":
