@@ -1,7 +1,7 @@
 import json
 import argparse
 
-from models import find_or_add_words, session, Word
+from models import find_or_add_tweet, session, Tweet
 
 
 
@@ -10,14 +10,14 @@ def load(filename):
         data = json.load(f)
     
     for word_dict in data:
-        word = Word()
-        word.yomi = word_dict['yomi']
-        word.kaki = word_dict['kaki']
+        tweet = Tweet()
+        tweet.twitterId = word_dict['twitterId']
+        tweet.text = word_dict['text']
 
-        find_or_add_words(session, word)
+        find_or_add_tweet(session, tweet)
 
     session.commit()
-    
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("command")
