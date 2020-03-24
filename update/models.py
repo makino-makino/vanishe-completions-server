@@ -31,12 +31,20 @@ class Word(Base):
 
 
 def find_or_add_tweet(session, tweet):
-    users = session.query(Tweet).\
+    tweets = session.query(Tweet).\
         filter(Tweet.twitterId==tweet.twitterId).\
         all()
 
-    if not users:
+    if not tweets:
         session.add(tweet)
+
+def find_or_add_words(session, word):
+    words = session.query(Word).\
+        filter(Word.kaki==word.kaki, Word.yomi==word.yomi).\
+        all()
+
+    if not words:
+        session.add(word)
 
 
 Base.metadata.create_all(ENGINE)
@@ -48,8 +56,8 @@ if __name__=='__main__':
     tweet.text = 'hello'
 
     word = Word()
-    word.yomi = 'ばにしぇだよ'
-    word.kaki = 'ばにしぇだよ〜〜〜www'
+    word.yomi = 'ばにしぇだぞ'
+    word.kaki = 'ばにしぇだゾ'
 
     session.add(tweet)
     session.add(word)
