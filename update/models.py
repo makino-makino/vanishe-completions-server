@@ -21,6 +21,7 @@ class Tweet(Base):
     twitterId = Column('twitterId', Integer)
     text = Column('text', Text)
 
+
 class Word(Base):
     '''辞書ワードのデータ'''
     __tablename__ = 'words'
@@ -37,6 +38,16 @@ def find_or_add_tweet(session, tweet):
 
     if not tweets:
         session.add(tweet)
+        session.commit()
+
+def find_or_add_word(session, word):
+    words = session.query(Word).\
+        filter(Word.kaki==word.kaki and Word.yomi == word.yomi).\
+        all()
+
+    if not words:
+        session.add(word)
+        session.commit()
 
 def find_or_add_words(session, word):
     words = session.query(Word).\
