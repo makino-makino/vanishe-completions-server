@@ -8,10 +8,14 @@ import tweepy
 from config import consumer_key, consumer_secret, access_token, access_secret
 from models import find_or_add_tweet, find_or_add_word, session, Tweet, Word
 
+import time
+
 ACCOUNT = 'a_a_vanilove'
 COUNT = 20
 THRESHOLD = 4
 PEINGS_TAGS = ['Peing', 'peing', '質問箱']
+
+SLEEP = 60 * 10
 
 def main():
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -91,4 +95,7 @@ def filter_text(text, hashtag):
 
 
 if __name__ == '__main__':
-    main()
+    while True:
+        main()
+        time.sleep(SLEEP)
+    
