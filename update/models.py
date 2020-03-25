@@ -49,6 +49,14 @@ def find_or_add_word(session, word):
         session.add(word)
         session.commit()
 
+def find_or_add_words(session, word):
+    words = session.query(Word).\
+        filter(Word.kaki==word.kaki, Word.yomi==word.yomi).\
+        all()
+
+    if not words:
+        session.add(word)
+
 
 Base.metadata.create_all(ENGINE)
 
@@ -59,8 +67,8 @@ if __name__=='__main__':
     tweet.text = 'hello'
 
     word = Word()
-    word.yomi = 'ばにしぇだよ'
-    word.kaki = 'ばにしぇだよ〜〜〜www'
+    word.yomi = 'ばにしぇだぞ'
+    word.kaki = 'ばにしぇだゾ'
 
     session.add(tweet)
     session.add(word)

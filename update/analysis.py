@@ -4,27 +4,18 @@ import re
 from pprint import pprint
 from pykakasi import kakasi as kks
 
-import tweepy
-from config import consumer_key, consumer_secret, access_token, access_secret
 from models import find_or_add_tweet, find_or_add_word, session, Tweet, Word
 
-ACCOUNT = 'a_a_vanilove'
-COUNT = 20
 THRESHOLD = 4
 PEINGS_TAGS = ['Peing', 'peing', '質問箱']
 HIRA = 'ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをあ'
 
 def main():
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_secret)
-    api = tweepy.API(auth)
 
     kakasi = kks()
     kakasi.setMode('K', 'H')
     kakasi.setMode('J', 'H')
     conv = kakasi.getConverter()
-
-    results = api.user_timeline(screen_name=ACCOUNT, count=COUNT)
 
     for r in results:
 
@@ -47,7 +38,7 @@ def main():
 
         tweet = Tweet()
         tweet.twitterId = r.id
-        tweet.text = text
+        tweet.full_text = text
         find_or_add_tweet(session, tweet)
 
 
@@ -60,9 +51,9 @@ def find_word(line):
 
     """ しきい値より多かったら """
     if res.count() > THRESHOLD:
-        print("~~~~ fonud ~~~~")
+        print("~~~~ found ~~~~")
         for i in res:
-            print(i.text)
+            print(f"id: {i.twitterId}, text: ` {i.text}'")
         return True
     return False
 
@@ -88,6 +79,32 @@ def filter_text(text, hashtag):
   return text
 
 
+def save_word_from_tweet(text, hashtag_tags):
+
+    kakasi = kks()
+    kakasi.setMode('K', 'H')
+    kakasi.setMode('J', 'H')
+    conv = kakasi.getConverter()
+
+    hashtag = ""
+
+    if hashtag_tags:
+        hashtag = hashtag_tags[0]['text']
+
+    text = filter_text(text, hashtag)
+
+    if not text:
+        pass
+
+    lines = text.splitlines()
+    for l in lines:
+        if find_word(l):
+            word = text_to_word(l, conv)
+            find_or_add_word(session, word)
+            return word
+
+
+
 def text_to_word(text, conv):
     word = Word()
     word.kaki = text
@@ -109,6 +126,3 @@ def text_to_word(text, conv):
     print(f"kaki: {word.kaki}, yomi: {word.yomi}")
 
     return word
-
-if __name__ == '__main__':
-    main()
