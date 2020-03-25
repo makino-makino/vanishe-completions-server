@@ -40,7 +40,6 @@ def find_or_add_tweet(session, tweet):
         session.add(tweet)
         session.commit()
 
-"""
 def find_or_add_word(session, word):
     words = session.query(Word).\
         filter(Word.kaki==word.kaki and Word.yomi == word.yomi).\
@@ -49,7 +48,7 @@ def find_or_add_word(session, word):
     if not words:
         session.add(word)
         session.commit()
-"""
+
 
 Base.metadata.create_all(ENGINE)
 

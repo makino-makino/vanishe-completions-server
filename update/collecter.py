@@ -6,7 +6,7 @@ from pykakasi import kakasi as kks
 
 import tweepy
 from config import consumer_key, consumer_secret, access_token, access_secret
-from models import find_or_add_tweet, session, Tweet, Word
+from models import find_or_add_tweet, find_or_add_word, session, Tweet, Word
 
 ACCOUNT = 'a_a_vanilove'
 COUNT = 20
@@ -44,15 +44,14 @@ def main():
                 word = Word()
                 word.kaki = l
                 word.yomi = conv.do(l)
-                print(word.kaki, conv.do(l))
-                # find_or_add_word(session, word)
+                print(f"kaki: {word.kaki}, yomi: {word.yomi}")
+                find_or_add_word(session, word)
 
         tweet = Tweet()
         tweet.twitterId = r.id
         tweet.text = text
         find_or_add_tweet(session, tweet)
 
-    session.commit()
 
 def find_word(line):
     print()
