@@ -6,8 +6,12 @@ from config import consumer_key, consumer_secret, access_token, access_secret
 
 from models import find_or_add_tweet, session, Tweet
 
+import time
+
 ACCOUNT = 'a_a_vanilove'
 COUNT = 20
+
+SLEEP = 60 * 10
 
 def main():
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -26,6 +30,8 @@ def main():
     session.commit()
 
 
-
 if __name__ == '__main__':
-    main()
+    while True:
+        main()
+        time.sleep(SLEEP)
+    

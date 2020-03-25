@@ -16,4 +16,4 @@ services:
     volumes:
       - "./update:/update"
     working_dir: /update
-    command: python3 serv.py
+    command: python3 serv.py & python3 collecter.py
